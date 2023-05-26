@@ -10,7 +10,7 @@ module.exports.users = {
 
   getOneUser: async (req, res) => {
     try {
-      const data = await User.findOne({role:'Фермер'});
+      const data = await User.find({role:'Фермер'});
       res.json(data);
     } catch (error) {
       res.json(error)
