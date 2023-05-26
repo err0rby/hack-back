@@ -7,7 +7,7 @@ module.exports.category = {
             if(req.params.id) {
                 return categories = await Category.find(req.params.id).exec();
             }
-            categories = await Category.find({}).exec();
+            const categories = await Category.find({}).exec();
             res.json({
                 status: 'success',
                 data: categories,
@@ -22,7 +22,8 @@ module.exports.category = {
     createCategory: async (req, res) => {
         try {
             const {name, products} = req.body
-            const category = new Category({name, products, author: req.user.id})
+            const category = new Category({name, products})
+            // const category = new Category({name, products, author: req.user.id})
             await category.save()
             return res.json(category)
         } catch (e) {
@@ -31,19 +32,16 @@ module.exports.category = {
         }
     },
     deleteCategory: async (req, res) => {
-        const categoryId = req.params.id
         try {
-            const category = await Category.findOne({_id: categoryId})
-            if(!category) {
-                return res.status(400).json({message: 'Категория не найдена'})
-            }
-            if(String(category.author._id) === String(req.user._id)) {
-                await Category.findOneAndDelete({_id: categoryId})
-                return res.json({message: 'Категория была удалена'})
-            }
+            const category = await Category.findByIdAndDelete(req.params.id)
+            // if(String(category.author._id) === String(req.user._id)) {
+            //     await Category.findOneAndDelete({_id: categoryId})
+            //     return res.json({message: 'Категория была удалена'})
+            // }
+            res.json(category)
         } catch (e) {
             console.log(e)
-            return res.status(400).json({message: 'Ошибка'})
+            return res.json({message: 'Ошибка'})
         }
     }
 }
