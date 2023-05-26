@@ -10,6 +10,8 @@ const UserSchema = mongoose.Schema({
     raiting:String,
     phone:Number,
     mail:String,
+    mySubscribers:[],
+    followers:[]
 })
 
 const User = mongoose.model("User", UserSchema);
