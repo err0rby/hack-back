@@ -8,6 +8,7 @@ router.get("/oneUser", users.getOneUser);
 router.get("/authUser/:id", users.getAuthUser);
 router.post("/login", users.login);
 router.patch("/following", users.addFollower);
-router.post("/auth", users.auth);;
+router.patch("/addProduct/:id", users.addProductToBascket);
+router.post("/auth", users.auth);
 
 module.exports = router;

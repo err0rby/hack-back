@@ -7,9 +7,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(require('./routes/product.route'))
-app.use(require('./routes/user.route'))
-app.use(require("./routes/basket.route"));
+app.use(require("./routes/product.route"));
+app.use(require("./routes/user.route"));
 
 const start = async () => {
   try {
