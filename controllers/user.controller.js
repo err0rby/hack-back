@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports.users = {
   getUsers: async (req, res) => {
-    const users = await User.find();
+    const users = await User.find().populate("bascket");
     res.json(users);
   },
 
