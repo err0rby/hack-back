@@ -8,7 +8,12 @@ module.exports.users = {
     res.json(users);
   },
   getAuthUser: async (req, res) => {
-    const users = await User.findById(req.params.id);
+    const users = await User.findById(req.params.id).populate("bascket");
+    res.json(users)
+  },
+
+  getPatchUser: async (req, res) => {
+    const users = await User.findByIdAndUpdate(req.params.id,{$set:{name: req.body.name, surname:req.body.surname,mail:req.body.mail,phone:req.body.phone}}).populate("bascket");
     res.json(users)
   },
 
