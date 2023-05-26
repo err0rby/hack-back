@@ -7,6 +7,11 @@ module.exports.users = {
     const users = await User.find();
     res.json(users)
   },
+  getAuthUser: async (req, res) => {
+    const users = await User.findById(req.params.id);
+    res.json(users)
+  },
+
 
     login: async (req, res) => {
       const { login, password } = req.body;
