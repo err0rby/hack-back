@@ -8,7 +8,7 @@ const UserSchema = mongoose.Schema({
     bankCard:String,
     raiting:String,
     phone:Number,
-    mail:String
+    mail:String,
 })
 
 const User = mongoose.model("User", UserSchema);
