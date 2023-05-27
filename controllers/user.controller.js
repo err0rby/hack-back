@@ -7,6 +7,37 @@ module.exports.users = {
     const users = await User.find().populate("bascket");
     res.json(users);
   },
+  
+  updateUser: async (req, res) => {
+    const {
+      name,
+      surname,
+      title,
+      raiting,
+      phone,
+      mail,
+      login,
+      password,
+      role,
+      bankCard,
+      logo,
+    } = req.body;
+    const data = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        role,
+        name,
+        surname,
+        phone,
+        mail,
+        title,
+        raiting,
+      },
+      { new: true }
+    );
+    res.json(data);
+  },
+    
   getAuthUser: async (req, res) => {
     const users = await User.findById(req.params.id).populate("bascket");
     res.json(users)
@@ -17,10 +48,8 @@ module.exports.users = {
     res.json(users)
   },
 
-
   login: async (req, res) => {
     const { login, password } = req.body;
-    console.log(password);
     const candidate = await User.findOne({ login });
 
     if (!candidate) {
@@ -28,7 +57,7 @@ module.exports.users = {
     }
 
     const valid = await bcrypt.compareSync(password, candidate.password);
-    console.log(password, candidate.password);
+
     if (!valid) {
       return res.status(404).json({ error: "password wrong" });
     }
@@ -53,7 +82,6 @@ module.exports.users = {
         surname: req.body.surname,
         phone: req.body.phone,
         mail: req.body.mail,
-
         login: login,
         password: hash,
       });
@@ -73,7 +101,7 @@ module.exports.users = {
   },
 
   addUser: async (req, res) => {
-    const { name, surname, raiting, role, login, password, bankCard } =
+    const { name, surname, raiting, login, password, role, bankCard, logo } =
       req.body;
     const brands = await User.create({
       name,
