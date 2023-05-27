@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const categorySchema = mongoose.Schema({
     name: {type: mongoose.SchemaTypes.String, required: true},
-    user: {type: mongoose.SchemaTypes.ObjectId, ref: 'User'},
+    user: {type: mongoose.SchemaTypes.ObjectId, ref: 'User', defaul: null},
     products: [{type: mongoose.SchemaTypes.ObjectId, ref: 'Product'}],
 })
 

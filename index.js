@@ -7,9 +7,11 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(require("./routes/product.route"));
-app.use(require("./routes/user.route"));
-app.use(require('./routes/request.route'))
+app.use(require('./routes/product.route'))
+app.use(require('./routes/user.route'))
+app.use(require("./routes/category.route"));
+app.use(require("./routes/request.route"));
+
 
 const start = async () => {
   try {
