@@ -12,12 +12,13 @@ module.exports.productController = {
 
   addProduct: async (req, res) => {
     try {
-      const { name, image, description, price } = req.body;
+      const { name, image, description, price, fermer } = req.body;
       const data = await Product.create({
         name,
         image,
         description,
         price,
+        fermer
       });
       res.json(data);
     } catch (error) {
