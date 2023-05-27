@@ -70,7 +70,10 @@ module.exports.users = {
     res.json({
       token,
       id: candidate._id,
+
       user:candidate
+
+      role: candidate.role,
     });
   },
   auth: async (req, res) => {

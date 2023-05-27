@@ -4,7 +4,8 @@ module.exports.category = {
     getCategories: async (req, res) => {
         try {
             if(req.params.id) {
-                const categories = await Category.find(req.params.id).populate("products");
+                const categories = await Category.findById(req.params.id).populate("products");
+                return res.json(categories);
             }
             const categories = await Category.find().populate("products");
             res.json(categories);
