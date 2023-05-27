@@ -2,16 +2,12 @@ const Category = require('../models/Category.model')
 
 module.exports.category = {
     getCategories: async (req, res) => {
-        let categories = []
         try {
             if(req.params.id) {
-                return categories = await Category.find(req.params.id).exec();
+                const categories = await Category.find(req.params.id).populate("products");
             }
-            const categories = await Category.find({}).exec();
-            res.json({
-                status: 'success',
-                data: categories,
-            });
+            const categories = await Category.find().populate("products");
+            res.json(categories);
         } catch (error) {
             res.status(500).json({
                 status: 'error',
