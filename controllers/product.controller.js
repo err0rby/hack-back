@@ -35,7 +35,7 @@ module.exports.productController = {
   },
 
   updateProduct: async (req, res) => {
-    const { name, image, description, price } = req.body;
+    const { name, image, description, price, fermer } = req.body;
     try {
       const data = await Product.findByIdAndUpdate(
         req.params.id,
@@ -44,10 +44,12 @@ module.exports.productController = {
           image,
           description,
           price,
+          fermer,
         },
         { new: true }
       );
-      res.json(data);
+      const result = await data.populate("fermer");
+      res.json(result);
     } catch (error) {}
   },
 };

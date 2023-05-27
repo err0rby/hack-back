@@ -1,4 +1,4 @@
-const Category = require('../models/Category.model')
+const Category = require("../models/Category.model");
 
 module.exports.category = {
     getCategories: async (req, res) => {
@@ -19,7 +19,6 @@ module.exports.category = {
         try {
             const {name, products} = req.body
             const category = new Category({name, products})
-            // const category = new Category({name, products, author: req.user.id})
             await category.save()
             return res.json(category)
         } catch (e) {
@@ -30,10 +29,6 @@ module.exports.category = {
     deleteCategory: async (req, res) => {
         try {
             const category = await Category.findByIdAndDelete(req.params.id)
-            // if(String(category.author._id) === String(req.user._id)) {
-            //     await Category.findOneAndDelete({_id: categoryId})
-            //     return res.json({message: 'Категория была удалена'})
-            // }
             res.json(category)
         } catch (e) {
             console.log(e)
