@@ -7,6 +7,7 @@ module.exports.users = {
     const users = await User.find().populate("bascket");
     res.json(users);
   },
+  
   updateUser: async (req, res) => {
     const {
       name,
@@ -36,6 +37,17 @@ module.exports.users = {
     );
     res.json(data);
   },
+    
+  getAuthUser: async (req, res) => {
+    const users = await User.findById(req.params.id).populate("bascket");
+    res.json(users)
+  },
+
+  getPatchUser: async (req, res) => {
+    const users = await User.findByIdAndUpdate(req.params.id,{$set:{name: req.body.name, surname:req.body.surname,mail:req.body.mail,phone:req.body.phone}}).populate("bascket");
+    res.json(users)
+  },
+
   login: async (req, res) => {
     const { login, password } = req.body;
     const candidate = await User.findOne({ login });
