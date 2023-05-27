@@ -12,6 +12,11 @@ const UserSchema = mongoose.Schema({
   phone: Number,
   mail: String,
   title: String,
+  ratedUsers:[{ user: mongoose.SchemaTypes.ObjectId, rating: Number }],
+  rating: {
+    type: Number,
+    default: 0,
+  },
   bascket: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Product" }],
   mySubscribers: [],
   followers: [],

@@ -70,6 +70,9 @@ module.exports.users = {
     res.json({
       token,
       id: candidate._id,
+
+      user:candidate
+
       role: candidate.role,
     });
   },
@@ -133,4 +136,53 @@ module.exports.users = {
     const result = await user.populate("bascket");
     res.json(result);
   },
+
+  rateMovie: async (req, res) => {
+    const { fermerId, rating,id } = req.body;
+    console.log(fermerId,rating,id)
+   
+    try {
+      const fermer = await User.findById(fermerId);
+      let find = fermer.ratedUsers.find((item) => String(item.user) === id);
+      if (!find) {
+        await fermer.updateOne({
+          $push: { ratedUsers: { user: id, rating } },
+        });
+        if (fermer.rating !== 0) {
+          const sum = fermer.ratedUsers.reduce((acc, element) => {
+            return acc + Number(element.rating);
+          }, 0);
+          await fermer.updateOne({
+            rating: (
+              (sum + Number(rating)) /
+              (fermer.ratedUsers.length + 1)
+            ).toFixed(1),
+          });
+        } else {
+          await fermer.updateOne({
+            rating: rating,
+          });
+        }
+      } else {
+        fermer.ratedUsers = fermer.ratedUsers.map((item) => {
+          if (String(item.user) === id) {
+            item.rating = rating;
+          }
+          return item;
+        });
+        await fermer.save();
+        const sum = fermer.ratedUsers.reduce((acc, element) => {
+          return acc + Number(element.rating);
+        }, 0);
+        await fermer.updateOne({
+          rating: (sum / movie.ratedUsers.length).toFixed(1),
+        });
+      }
+
+      return res.json(await User.findById(fermer));
+    } catch (e) {
+      return res.json({ error: `ошибка при попытке оставить оценку: ${e}` });
+    }
+  },
+
 };
